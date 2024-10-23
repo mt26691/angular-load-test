@@ -48,7 +48,7 @@ project-root/
 ├── api/                      # Contains the backend code
 ├── client/                   # Contains the frontend (Angular) code
 ├── cypress/                  # Cypress test suite
-│   ├── integration/          # Contains Cypress integration tests
+│   ├── e2e/                  # Contains Cypress e2e load tests
 │   ├── fixtures/             # Fixture files for testing
 │   ├── support/              # Cypress commands and support files
 ├── docker-compose.yml        # Docker Compose configuration for deploying services
