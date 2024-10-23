@@ -36,7 +36,7 @@ export const convertVideoToGif = (
       const { width, height } = videoStream;
 
       // Check if duration exceeds 10 seconds
-      if (duration && duration > 40) {
+      if (duration && duration > 10) {
         await saveFailureToJsonServer(
           jobId,
           originalFileName,
