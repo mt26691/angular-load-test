@@ -1,0 +1,72 @@
+version: "3"
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: api_image
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - REDIS_HOST=redis
+      - API_URL=http://api:3000
+    volumes:
+      - uploads:/usr/src/app/uploads
+    depends_on:
+      - redis
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  worker:
+    build:
+      context: ./api
+      dockerfile: worker.Dockerfile
+    image: worker_image
+    command: npm run worker
+    environment:
+      - NODE_ENV=production
+      - REDIS_HOST=redis
+      - API_URL=http://api:3000
+    volumes:
+      - uploads:/usr/src/app/uploads
+    depends_on:
+      - redis
+    deploy:
+      replicas: 5
+      update_config:
+        parallelism: 2
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+
+  redis:
+    image: redis:6.2.6
+    ports:
+      - "6379:6379"
+
+  client:
+    build:
+      context: ./client
+    image: client_image
+    ports:
+      - "4200:80" # Maps host port 4200 to Nginx default port 80 inside container
+    environment:
+      - API_URL=http://api:3000
+    depends_on:
+      - api
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  uploads:

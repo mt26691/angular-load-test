@@ -1,0 +1,89 @@
+<div class="upload-page">
+  <h1 class="title">MP4 Video Uploader</h1>
+
+  <div class="upload-container">
+    <input
+      type="file"
+      #fileInput
+      (change)="onFileSelected($event)"
+      accept="video/mp4"
+      hidden
+    />
+
+    <button
+      mat-raised-button
+      color="accent"
+      class="upload-button"
+      (click)="fileInput.click()"
+    >
+      Upload MP4 File
+    </button>
+  </div>
+
+  <!-- List of uploaded files -->
+  <div class="file-list">
+    <h2>Processed Files</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Job Id</th>
+          <th>File Name</th>
+          <th>Created Time</th>
+          <th>Status</th>
+          <th>Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of paginatedFiles">
+          <td>{{ file.jobId }}</td>
+          <td>{{ file.name }}</td>
+          <td>{{ file.createdTime | date : "medium" }}</td>
+          <td>
+            <span
+              [ngClass]="{
+                'status-success': file.status === 'completed',
+                'status-fail': file.status === 'failed'
+              }"
+              class="capitalize-text"
+            >
+              {{ file.status }}
+            </span>
+          </td>
+          <td>
+            <div *ngIf="file.status === 'failed'">
+              <span class="failure-reason">Reason: {{ file.reason }}</span>
+            </div>
+            <div *ngIf="file.status === 'completed' && file.convertedFilePath">
+              <a [href]="file.convertedFilePath" target="_blank">
+                <img
+                  [src]="file.convertedFilePath"
+                  alt="Converted GIF"
+                  style="max-width: 200px; max-height: 200px"
+                />
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    <div class="pagination-controls">
+      <button
+        mat-raised-button
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button
+        mat-raised-button
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>

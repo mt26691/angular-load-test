@@ -1,0 +1,148 @@
+.upload-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  font-family: "Roboto", sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 36px;
+  color: #008080; /* Teal main color */
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.upload-button {
+  padding: 10px 20px;
+  background-color: #008080; /* Teal for modern look */
+  color: white;
+  font-size: 18px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: #006666;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.drag-area {
+  width: 350px;
+  height: 160px;
+  border: 2px dashed #008080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 16px;
+  color: #008080;
+  margin-top: 20px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.drag-area:hover {
+  background-color: #e0f7f7; /* Subtle hover effect */
+  border-color: #006666;
+}
+
+.file-list {
+  margin-top: 40px;
+  width: 80%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.file-list h2 {
+  color: #008080;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+td {
+  background-color: #ffffff;
+}
+
+.capitalize-text {
+  text-transform: capitalize;
+}
+
+.status-success {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-fail {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  padding: 6px 12px; /* Smaller button size */
+  background-color: #008080;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px; /* Smaller font size */
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pagination-controls button:hover {
+  background-color: #006666;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 14px;
+  color: #008080;
+}
