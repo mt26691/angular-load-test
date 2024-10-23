@@ -89,13 +89,48 @@ docker compose up
 
 This command will spin up all the required containers in development mode using Docker Compose.
 
-## Application Endpoints
+# Application Endpoints
 
-- **Frontend**: Accessible at [http://localhost:42000](http://localhost:42000)
-- **Backend API**: Accessible at [http://localhost:3000](http://localhost:3000)
-- **Redis**: Accessible at `localhost:6379`
+## Frontend
 
-The worker threads are managed internally with a replica count of 5, distributing the load through the Redis Bull queue.
+Accessible at [http://localhost:42000](http://localhost:42000)
+
+## Backend API
+
+Accessible at [http://localhost:3000](http://localhost:3000)
+
+### POST http://localhost:3000/v1/convert
+
+This endpoint accepts an `MP4` file for validation and conversion to a `GIF`. The processing involves:
+
+1. **Validation**: Ensures the uploaded file is in the proper MP4 format.
+2. **Conversion**: Once validated, the backend converts the MP4 file into a GIF using an internal processing service.
+
+**Request Structure**:
+
+- **URL**: `http://localhost:3000/v1/convert`
+- **Method**: `POST`
+- **Content-Type**: `multipart/form-data`
+- **Parameters**:
+  - `file`: The MP4 file to be uploaded for conversion.
+
+### GET http://localhost:3000/json/files
+
+This endpoint provides a JSON response containing the status of processed files and a link to access each processed GIF.
+
+**Request Structure**:
+
+- **URL**: `http://localhost:3000/json/files`
+- **Method**: `GET`
+
+**Response**: Returns a JSON array with objects containing:
+
+- **status**: The current status of each file (e.g., processing, completed, failed).
+- **file_link**: The direct link to access the processed GIF file if the conversion is complete.
+
+## Redis and Worker Configuration
+
+- **Redis**: Serves as the queue manager and is accessible at `localhost:6379`. Worker threads are managed internally with a replica count of 5, distributing the load through the Redis Bull queue. This setup ensures efficient processing and distribution of conversion tasks.
 
 ## Running the Load Test
 
