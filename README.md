@@ -8,6 +8,9 @@
 - [Folder Structure](#folder-structure)
 - [Setup and Deployment](#setup-and-deployment)
 - [Application Endpoints](#application-endpoints)
+- [Running the Load Test](#running-the-load-test)
+- [Running Cypress Tests](#running-cypress-tests)
+- [Application Endpoints](#application-endpoints)
 
 ## Overview
 
@@ -32,6 +35,7 @@ Ensure the following tools are installed on your system before starting:
 
 - **Docker** (Version 27 or higher)
 - **Node.js** with **npm**
+- **Curl** for load tests
 
 To install Cypress dependencies, run the following command from the root of the project:
 
@@ -45,15 +49,17 @@ The project is organized as follows:
 
 ```bash
 project-root/
-├── api/                      # Contains the backend code
-├── client/                   # Contains the frontend (Angular) code
-├── cypress/                  # Cypress test suite
-│   ├── e2e/                  # Contains Cypress e2e load tests
-│   ├── fixtures/             # Fixture files for testing
+├── api/                      # Backend code for the server and APIs
+├── client/                   # Frontend code developed using Angular
+├── cypress/                  # Cypress test suite for end-to-end testing
+│   ├── e2e/                  # End-to-end (e2e) tests written in Cypress
+│   ├── fixtures/             # Test fixture files for providing sample data
 │   ├── support/              # Cypress commands and support files
-├── docker-compose.yml        # Docker Compose configuration for deploying services
-└── bootstrap.sh              # Shell script to deploy services
-
+├── docs/                     # Documentation resources and related images
+├── docker-compose.yml        # Docker Compose configuration for managing and deploying services
+├── bootstrap.sh              # Shell script for initializing and deploying services
+├── load-test.sh              # Shell script to execute the load test using curl
+└── load-test.mp4             # Sample MP4 video file used for load testing
 ```
 
 ## Setup and Deployment
@@ -67,6 +73,7 @@ sh bootstrap.sh
 
 This will deploy the following services using Docker Swarm or Docker Compose:
 
+- **Stack Name** `mp4_to_gif_stack`
 - **Frontend (Angular app)** at [http://localhost:42000](http://localhost:42000)
 - **Backend (API)** at [http://localhost:3000](http://localhost:3000)
 - **Redis** at `localhost:6379`
@@ -90,7 +97,20 @@ This command will spin up all the required containers in development mode using 
 
 The worker threads are managed internally with a replica count of 5, distributing the load through the Redis Bull queue.
 
-### Running Cypress Tests
+## Running the Load Test
+
+To perform a load test that sends 1000 requests in 1 minute to the endpoint `http://localhost:3000/v1/convert`, follow these steps:
+
+1. **Ensure your server is up and running** on `localhost:3000`.
+2. **Run the Load Test Script**:
+
+```bash
+sh load-test.sh
+```
+
+It will use `curl` to upload the file `load-test.mp4` 1000 times within 1 minute. Ensure that `curl` is installed on your system before executing the test to avoid any issues.
+
+## Running Cypress Tests
 
 To execute the Cypress tests, make sure the application stack is up and running. Then, you can open Cypress using:
 
